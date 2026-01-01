@@ -1,6 +1,4 @@
-from signLanguage.logger import logging
-from signLanguage.exception import SignException
+from signLanguage.pipline.training_pipeline import TrainPipeline
 
-
-
-logging.info("Welcome to the Project")
+obj = TrainPipeline()
+obj.run_pipeline()
