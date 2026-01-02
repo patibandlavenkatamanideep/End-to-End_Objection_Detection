@@ -2,14 +2,19 @@ import sys
 
 
 def error_message_detail(error, error_detail: sys):
-    _, _, exc_tb = error_detail.exc_info()
+    try:
+        _, _, exc_tb = error_detail.exc_info()
+        if exc_tb is not None:
+            file_name = exc_tb.tb_frame.f_code.co_filename
+            line_number = exc_tb.tb_lineno
+        else:
+            file_name = "<unknown>"
+            line_number = 0
+    except Exception:
+        file_name = "<unknown>"
+        line_number = 0
 
-    file_name = exc_tb.tb_frame.f_code.co_filename
-
-    error_message = "Error occurred python script name [{0}] line number [{1}] error message [{2}]".format(
-        file_name, exc_tb.tb_lineno, str(error)
-    )
-
+    error_message = f"Error occurred in script: {file_name} at line: {line_number} | error message: {str(error)}"
     return error_message
 
 
